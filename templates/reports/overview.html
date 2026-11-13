@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Society Analytics & Reports - NivasSetu{% endblock %}
+
+{% block extra_head %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Reports & Society Analytics</h1>
+            <p class="text-sm text-slate-500">Grievance resolution efficiency, SLA compliance and maintenance balance</p>
+        </div>
+        <div class="flex items-center space-x-2">
+            <a href="{% url 'reports:export_complaints' %}" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-semibold hover:bg-slate-50 transition">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>Complaints CSV</span>
+            </a>
+            <a href="{% url 'reports:export_dues' %}" class="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>Dues CSV</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- KPI Summary Row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Total Logged Tickets</span>
+            <p class="text-2xl font-bold mt-1 text-slate-900 dark:text-white">{{ total_complaints }}</p>
+            <span class="text-xs text-slate-400 mt-1 inline-block">All-time lifetime records</span>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Active / Pending</span>
+            <p class="text-2xl font-bold mt-1 text-amber-600">{{ open_complaints }}</p>
+            <span class="text-xs text-rose-500 font-medium mt-1 inline-block">{{ overdue_count }} Breached SLA</span>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Collections (INR)</span>
+            <p class="text-2xl font-bold mt-1 text-emerald-600">₹{{ total_paid }}</p>
+            <span class="text-xs text-slate-400 mt-1 inline-block">Total verified payments</span>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <span class="text-xs font-semibold text-slate-500 uppercase">Outstanding Dues</span>
+            <p class="text-2xl font-bold mt-1 text-rose-600">₹{{ total_pending }}</p>
+            <span class="text-xs text-slate-400 mt-1 inline-block">Uncollected arrears</span>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Category Distribution Chart -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-4">
+                Complaints by Category
+            </h3>
+            <div class="h-64">
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Dues Settlement Ratio -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-4">
+                Maintenance Collection Status
+            </h3>
+            <div class="h-64">
+                <canvas id="duesChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Category Chart (Doughnut)
+    const ctxCat = document.getElementById('categoryChart').getContext('2d');
+    new Chart(ctxCat, {
+        type: 'doughnut',
+        data: {
+            labels: {{ cat_labels|safe }},
+            datasets: [{
+                data: {{ cat_counts|safe }},
+                backgroundColor: ['#4f46e5', '#06b6d4', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // Dues Chart (Pie)
+    const ctxDues = document.getElementById('duesChart').getContext('2d');
+    new Chart(ctxDues, {
+        type: 'pie',
+        data: {
+            labels: ['Collected (Paid)', 'Outstanding (Pending)'],
+            datasets: [{
+                data: [{{ total_paid }}, {{ total_pending }}],
+                backgroundColor: ['#10b981', '#ef4444'],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+{% endblock %}
+

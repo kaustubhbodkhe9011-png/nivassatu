@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Flats & Wings Inventory - NivasSetu{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Flats & Wings Directory</h1>
+            <p class="text-sm text-slate-500">Manage apartment units, area specs, and occupancy status</p>
+        </div>
+        <a href="{% url 'society:add_flat' %}" class="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold shadow-sm transition">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Add New Flat</span>
+        </a>
+    </div>
+
+    <!-- Filter by Wing -->
+    <div class="flex items-center space-x-2 overflow-x-auto pb-2">
+        <a href="{% url 'society:flats' %}" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold {% if not selected_building %}bg-indigo-600 text-white{% else %}bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700{% endif %}">
+            All Wings
+        </a>
+        {% for b in buildings %}
+        <a href="?building={{ b.id }}" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold {% if selected_building == b.id|stringformat:'i' %}bg-indigo-600 text-white{% else %}bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700{% endif %}">
+            {{ b.name }}
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Flats Table -->
+    <div class="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                        <th class="py-3 px-4">Flat Number</th>
+                        <th class="py-3 px-4">Wing</th>
+                        <th class="py-3 px-4">Floor</th>
+                        <th class="py-3 px-4">Type</th>
+                        <th class="py-3 px-4">Area (sq.ft)</th>
+                        <th class="py-3 px-4">Occupant</th>
+                        <th class="py-3 px-4 text-right">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                    {% for flat in flats %}
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition">
+                        <td class="py-3 px-4 font-semibold text-slate-900 dark:text-white">{{ flat.flat_number }}</td>
+                        <td class="py-3 px-4">{{ flat.building.name }}</td>
+                        <td class="py-3 px-4">Floor {{ flat.floor }}</td>
+                        <td class="py-3 px-4">{{ flat.get_flat_type_display }}</td>
+                        <td class="py-3 px-4">{{ flat.square_feet }} sq.ft</td>
+                        <td class="py-3 px-4">
+                            {% with occupant=flat.get_current_occupant %}
+                                {% if occupant %}
+                                <span class="font-medium text-slate-900 dark:text-white">{{ occupant.get_full_name|default:occupant.username }}</span>
+                                {% else %}
+                                <span class="text-xs text-slate-400 italic">Vacant</span>
+                                {% endif %}
+                            {% endwith %}
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            {% if flat.get_current_occupant %}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
+                                Occupied
+                            </span>
+                            {% else %}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                                Unoccupied
+                            </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="py-8 text-center text-slate-500">
+                            No flats found in this filter.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

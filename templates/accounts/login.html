@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Access Portal | NivasSetu{% endblock %}
+
+{% block public_content %}
+<div class="relative min-h-[calc(100vh-6rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    
+    <!-- Ambient Backdrop Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
+             alt="Backdrop" 
+             class="w-full h-full object-cover object-center filter brightness-[0.25] contrast-[1.1]">
+        <div class="absolute inset-0 bg-[#0b0c10]/75 backdrop-blur-sm"></div>
+    </div>
+
+    <!-- Login Glass Card -->
+    <div class="relative z-10 w-full max-w-md">
+        
+        <div class="text-center mb-8">
+            <div class="inline-flex w-12 h-12 rounded-2xl bg-gradient-to-br from-gold-400 to-gold-600 items-center justify-center text-stone-950 font-serif font-bold text-xl shadow-2xl mb-4">
+                △
+            </div>
+            <h2 class="text-3xl font-serif text-white tracking-wide">Resident & Staff Portal</h2>
+            <p class="mt-2 text-xs uppercase tracking-[0.2em] text-gold-400/80 font-medium">
+                NivasSetu Architectural Living
+            </p>
+        </div>
+
+        <div class="glass-card p-8 sm:p-10 rounded-3xl border border-white/10 shadow-2xl">
+            <form method="POST" class="space-y-6">
+                {% csrf_token %}
+                
+                <div>
+                    <label for="{{ form.username.id_for_label }}" class="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-2">
+                        Username / Identifier
+                    </label>
+                    <div class="relative">
+                        <input type="text" name="username" id="{{ form.username.id_for_label }}" required
+                               class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 transition"
+                               placeholder="e.g. secretary or resident1">
+                    </div>
+                    {% if form.username.errors %}
+                    <p class="text-xs text-rose-400 mt-1.5">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <label for="{{ form.password.id_for_label }}" class="block text-xs uppercase tracking-wider text-slate-300 font-medium mb-2">
+                        Security Key / Password
+                    </label>
+                    <div class="relative">
+                        <input type="password" name="password" id="{{ form.password.id_for_label }}" required
+                               class="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 transition"
+                               placeholder="••••••••">
+                    </div>
+                    {% if form.password.errors %}
+                    <p class="text-xs text-rose-400 mt-1.5">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" 
+                        class="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-stone-950 font-semibold text-xs uppercase tracking-[0.2em] shadow-xl hover:shadow-gold-500/20 transition-all duration-300">
+                    Sign In to Space
+                </button>
+            </form>
+
+            <!-- Quick Evaluation Demo Buttons -->
+            <div class="mt-8 pt-6 border-t border-white/10">
+                <p class="text-[10px] uppercase tracking-[0.25em] text-slate-400 font-medium text-center mb-3">
+                    One-Tap Demo Credentials
+                </p>
+                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                    <button type="button" onclick="fillDemo('secretary', 'admin123')" 
+                            class="py-2.5 px-2 rounded-xl glass-pill hover:border-gold-400/60 text-gold-300 font-medium tracking-wide text-[11px] transition">
+                        Secretary
+                    </button>
+                    <button type="button" onclick="fillDemo('resident1', 'resident123')" 
+                            class="py-2.5 px-2 rounded-xl glass-pill hover:border-sand-300/60 text-sand-200 font-medium tracking-wide text-[11px] transition">
+                        Resident
+                    </button>
+                    <button type="button" onclick="fillDemo('staff1', 'staff123')" 
+                            class="py-2.5 px-2 rounded-xl glass-pill hover:border-slate-300/60 text-slate-300 font-medium tracking-wide text-[11px] transition">
+                        Staff
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-6">
+            <a href="{% url 'core:landing' %}" class="text-xs uppercase tracking-widest text-slate-400 hover:text-gold-300 transition">
+                ← Return to Residence Overview
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function fillDemo(username, password) {
+        document.getElementById('{{ form.username.id_for_label }}').value = username;
+        document.getElementById('{{ form.password.id_for_label }}').value = password;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}NivasSetu | Architectural Society Management{% endblock %}
+
+{% block public_content %}
+<div class="relative min-h-[calc(100vh-6rem)] flex flex-col justify-between overflow-hidden">
+    
+    <!-- Hero Canvas / Architectural Backdrop -->
+    <div class="absolute inset-0 z-0">
+        <!-- High-res modern architectural villa at dusk with warm glowing interior lights and pool reflection -->
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop" 
+             alt="Architectural Luxury Residence" 
+             class="w-full h-full object-cover object-center scale-105 filter brightness-[0.42] contrast-[1.12]">
+        
+        <!-- Subtle Vignette & Gradient Overlays for Architectural Depth -->
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0c10] via-[#0b0c10]/40 to-[#0b0c10]/80"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0b0c10]/90 via-transparent to-[#0b0c10]/60"></div>
+    </div>
+
+    <!-- Main Hero Content -->
+    <div class="relative z-10 max-w-7xl mx-auto w-full px-6 sm:px-12 pt-12 sm:pt-20 lg:pt-28 pb-12">
+        <div class="max-w-2xl space-y-6">
+            
+            <!-- Category Tag -->
+            <div class="inline-flex items-center space-x-3 text-[11px] uppercase tracking-[0.28em] text-gold-400 font-medium">
+                <span>Architecture</span>
+                <span class="w-1 h-1 rounded-full bg-gold-400/60"></span>
+                <span>Residences</span>
+                <span class="w-1 h-1 rounded-full bg-gold-400/60"></span>
+                <span>Governance</span>
+            </div>
+
+            <!-- Primary Editorial Headline -->
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-serif font-normal tracking-tight text-white leading-[1.08]">
+                Architecture that inspires.<br>
+                <span class="italic text-sand-200">Living that thrives.</span>
+            </h1>
+
+            <!-- Subtitle Description -->
+            <p class="text-sm sm:text-base text-slate-300 font-light leading-relaxed max-w-xl">
+                We craft timeless residential governance and intelligent living systems that blend beauty, SLA accountability, and community harmony — built around human experience.
+            </p>
+
+            <!-- Hero Action Buttons -->
+            <div class="pt-4 flex flex-wrap items-center gap-4">
+                <a href="{% url 'accounts:login' %}" 
+                   class="inline-flex items-center space-x-3 px-8 py-3.5 rounded-full bg-stone-900/80 hover:bg-gold-500/20 text-white hover:text-gold-200 border border-white/20 hover:border-gold-400 text-xs uppercase tracking-[0.2em] font-medium backdrop-blur-xl transition-all duration-300 shadow-xl group">
+                    <span>Explore Portal</span>
+                    <span class="text-gold-400 group-hover:translate-x-1 group-hover:-translate-y-0.5 transition-transform">↗</span>
+                </a>
+
+                <a href="#quick-roles" 
+                   class="inline-flex items-center space-x-3 px-7 py-3.5 rounded-full glass-pill hover:border-white/30 text-xs uppercase tracking-[0.18em] text-slate-300 hover:text-white transition duration-300">
+                    <span class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-gold-300 text-[10px]">▶</span>
+                    <span>Demo Accounts</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Architectural Stat Counter Bar (Mirroring Bottom Ribbon in Reference Image) -->
+    <div class="relative z-10 w-full border-t border-white/10 bg-black/40 backdrop-blur-2xl">
+        <div class="max-w-7xl mx-auto px-6 sm:px-12 py-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+                
+                <!-- Stat 1 -->
+                <div class="flex items-center space-x-4 group">
+                    <div class="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-gold-400 group-hover:border-gold-400/50 transition-colors">
+                        <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-serif text-white tracking-tight">120+</div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-medium">Tickets Resolved</div>
+                    </div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="flex items-center space-x-4 group">
+                    <div class="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-gold-400 group-hover:border-gold-400/50 transition-colors">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-serif text-white tracking-tight">4 Hours</div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-medium">Critical SLA</div>
+                    </div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="flex items-center space-x-4 group">
+                    <div class="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-gold-400 group-hover:border-gold-400/50 transition-colors">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-serif text-white tracking-tight">80+</div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-medium">Verified Residents</div>
+                    </div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="flex items-center space-x-4 group">
+                    <div class="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-gold-400 group-hover:border-gold-400/50 transition-colors">
+                        <i data-lucide="building-2" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <div class="text-xl sm:text-2xl font-serif text-white tracking-tight">100%</div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-medium">Audit Trail</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Assistance / Quick Search Pill (Bottom Right like Archevo) -->
+    <a href="{% url 'accounts:login' %}" 
+       class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-2xl glass-card border border-gold-400/40 text-gold-300 hover:text-white hover:border-gold-300 flex items-center justify-center shadow-2xl hover:scale-105 transition-all duration-300 group"
+       title="Quick Login">
+        <i data-lucide="sparkles" class="w-5 h-5 group-hover:rotate-12 transition-transform"></i>
+    </a>
+</div>
+
+<!-- Architectural Features & Problem Solution -->
+<div id="overview" class="relative z-10 py-24 px-6 sm:px-12 max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto space-y-4 mb-16">
+        <span class="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-semibold">Intelligent Architecture</span>
+        <h2 class="text-3xl sm:text-4xl font-serif text-white">Replacing Chaos with Precision</h2>
+        <p class="text-slate-400 text-sm font-light">Housing societies thrive when accountability is built directly into the foundational framework.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Outdated Traditional Mode -->
+        <div class="p-8 rounded-3xl glass-card border border-rose-900/30 relative overflow-hidden group">
+            <div class="flex items-center space-x-3 text-rose-400 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-rose-950/50 border border-rose-800/40 flex items-center justify-center">
+                    <i data-lucide="alert-circle" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="font-serif text-lg text-white">The Paper & Chat Discord</h3>
+                    <p class="text-[11px] text-rose-400/80 uppercase tracking-widest">Unstructured Communication</p>
+                </div>
+            </div>
+            <ul class="space-y-4 text-sm text-slate-300 font-light">
+                <li class="flex items-start space-x-3">
+                    <span class="text-rose-400 mt-0.5">✕</span>
+                    <span>Complaints buried under casual WhatsApp chatter; no ticket numbers or accountability.</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                    <span class="text-rose-400 mt-0.5">✕</span>
+                    <span>Lift failures, plumbing bursts, and security defects linger for weeks without SLA timers.</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                    <span class="text-rose-400 mt-0.5">✕</span>
+                    <span>Maintenance tracked in loose notebooks leading to bitter AGM financial arguments.</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- The NivasSetu Way -->
+        <div class="p-8 rounded-3xl glass-card border border-gold-500/30 relative overflow-hidden group shadow-2xl">
+            <div class="flex items-center space-x-3 text-gold-400 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-gold-950/50 border border-gold-500/40 flex items-center justify-center">
+                    <i data-lucide="check-circle" class="w-5 h-5 text-gold-400"></i>
+                </div>
+                <div>
+                    <h3 class="font-serif text-lg text-white">The NivasSetu Standard</h3>
+                    <p class="text-[11px] text-gold-400/80 uppercase tracking-widest">Architectural Order</p>
+                </div>
+            </div>
+            <ul class="space-y-4 text-sm text-slate-300 font-light">
+                <li class="flex items-start space-x-3">
+                    <span class="text-gold-400 mt-0.5">✓</span>
+                    <span>Unique ticket dispatching (`NS-YYYYMMDD-NNNN`) with automatic SLA countdowns.</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                    <span class="text-gold-400 mt-0.5">✓</span>
+                    <span>Strict role workflow: Secretary assignments, technician updates, and 7-day resident reopen rights.</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                    <span class="text-gold-400 mt-0.5">✓</span>
+                    <span>Exact per-sq-ft formula dues calculations, multi-mode records, and printable verified receipts.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Demo Role Launchpad (Referenced by Top Button) -->
+<div id="quick-roles" class="py-20 border-t border-white/5 bg-stone-950/70">
+    <div class="max-w-7xl mx-auto px-6 sm:px-12">
+        <div class="text-center max-w-xl mx-auto space-y-3 mb-12">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-semibold">Immediate Evaluation</span>
+            <h2 class="text-3xl font-serif text-white">Experience Three Perspectives</h2>
+            <p class="text-slate-400 text-xs font-light">Click any stakeholder profile to log in instantly with seeded demonstration data.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Secretary -->
+            <a href="{% url 'accounts:login' %}" 
+               class="p-8 rounded-3xl glass-card border border-white/10 hover:border-gold-400/50 transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl glass-pill flex items-center justify-center text-gold-400 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="crown" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl text-white mb-2">Society Secretary</h3>
+                    <p class="text-xs text-slate-400 font-light leading-relaxed">
+                        Full administration: wings, flats, staff assignments, dues formulas, overdue SLAs, and audit logs.
+                    </p>
+                </div>
+                <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-gold-300 font-medium tracking-wider uppercase">
+                    <span>Login as Secretary</span>
+                    <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </a>
+
+            <!-- Resident -->
+            <a href="{% url 'accounts:login' %}" 
+               class="p-8 rounded-3xl glass-card border border-white/10 hover:border-gold-400/50 transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl glass-pill flex items-center justify-center text-sand-300 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="home" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl text-white mb-2">Resident Member</h3>
+                    <p class="text-xs text-slate-400 font-light leading-relaxed">
+                        Raise issues with photos, track status timeline in real-time, rate completed work, and review dues receipts.
+                    </p>
+                </div>
+                <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-sand-300 font-medium tracking-wider uppercase">
+                    <span>Login as Resident</span>
+                    <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </a>
+
+            <!-- Technician / Staff -->
+            <a href="{% url 'accounts:login' %}" 
+               class="p-8 rounded-3xl glass-card border border-white/10 hover:border-gold-400/50 transition-all duration-300 group flex flex-col justify-between">
+                <div>
+                    <div class="w-12 h-12 rounded-2xl glass-pill flex items-center justify-center text-slate-300 mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="wrench" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-serif text-xl text-white mb-2">Field Technician</h3>
+                    <p class="text-xs text-slate-400 font-light leading-relaxed">
+                        Mobile-optimized task queue: view assigned flats, inspect issues, post progress remarks, and resolve tickets.
+                    </p>
+                </div>
+                <div class="mt-8 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-300 font-medium tracking-wider uppercase">
+                    <span>Login as Staff</span>
+                    <span class="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

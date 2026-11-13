@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Receipt {{ payment.receipt_number }} - NivasSetu{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto space-y-6">
+    <!-- Action buttons -->
+    <div class="flex justify-between items-center print:hidden">
+        <a href="{% url 'dues:list' %}" class="text-sm text-slate-500 hover:text-slate-700 flex items-center space-x-1">
+            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            <span>Back to Dues</span>
+        </a>
+        <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition flex items-center space-x-2">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+            <span>Print Receipt</span>
+        </button>
+    </div>
+
+    <!-- Official Printable Voucher -->
+    <div class="bg-white p-8 md:p-10 rounded-2xl border border-slate-200 shadow-lg text-slate-900 space-y-6 print:shadow-none print:border-none print:p-0">
+        <!-- Header -->
+        <div class="border-b-2 border-indigo-600 pb-4 text-center">
+            <h2 class="text-2xl font-bold tracking-tight text-indigo-700">{{ SOCIETY_NAME }}</h2>
+            <p class="text-xs text-slate-500 mt-1">Official Maintenance Payment Receipt</p>
+            <div class="mt-3 flex justify-between text-xs text-slate-600 font-mono">
+                <span>Receipt No: <strong>{{ payment.receipt_number }}</strong></span>
+                <span>Date: <strong>{{ payment.payment_date|date:"d M Y" }}</strong></span>
+            </div>
+        </div>
+
+        <!-- Particulars Table -->
+        <table class="w-full text-sm">
+            <tbody class="divide-y divide-slate-100">
+                <tr class="py-2">
+                    <td class="py-2.5 text-slate-500">Received From:</td>
+                    <td class="py-2.5 font-semibold text-right">{{ payment.recorded_by.get_full_name|default:payment.recorded_by.username }}</td>
+                </tr>
+                <tr>
+                    <td class="py-2.5 text-slate-500">Flat Unit:</td>
+                    <td class="py-2.5 font-semibold text-right">{{ payment.dues_record.flat.full_name }}</td>
+                </tr>
+                <tr>
+                    <td class="py-2.5 text-slate-500">Billing Period:</td>
+                    <td class="py-2.5 font-medium text-right">{{ payment.dues_record.billing_month }}</td>
+                </tr>
+                <tr>
+                    <td class="py-2.5 text-slate-500">Payment Mode:</td>
+                    <td class="py-2.5 font-medium text-right">{{ payment.get_payment_mode_display }}</td>
+                </tr>
+                {% if payment.transaction_reference %}
+                <tr>
+                    <td class="py-2.5 text-slate-500">Ref / Cheque / UTR:</td>
+                    <td class="py-2.5 font-mono text-right text-xs">{{ payment.transaction_reference }}</td>
+                </tr>
+                {% endif %}
+                <tr class="bg-indigo-50/60 font-bold">
+                    <td class="py-3 px-3 text-indigo-900 text-base">Amount Paid:</td>
+                    <td class="py-3 px-3 text-indigo-900 text-lg text-right">₹{{ payment.amount }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Footer / Signature -->
+        <div class="pt-8 flex justify-between items-end text-xs text-slate-500">
+            <div>
+                <p>Status: <span class="text-emerald-600 font-semibold uppercase">Payment Verified</span></p>
+                <p class="mt-1">Computer Generated Receipt</p>
+            </div>
+            <div class="text-center">
+                <div class="w-32 border-b border-slate-400 mb-1"></div>
+                <span>Authorized Signatory</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

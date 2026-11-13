@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}Resident Portal | NivasSetu{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-white/10">
+        <div>
+            <span class="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold">Residence Sanctuary</span>
+            <h1 class="text-3xl font-serif text-white tracking-wide mt-1">Welcome Home, {{ request.user.first_name|default:request.user.username }}</h1>
+            <p class="text-xs text-slate-400 font-light">Monitor personal grievances, acknowledge notices, and inspect dues ledgers</p>
+        </div>
+        <a href="{% url 'complaints:create' %}" class="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-stone-950 font-semibold text-xs uppercase tracking-wider shadow-lg transition">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>File Grievance</span>
+        </a>
+    </div>
+
+    <!-- Overview Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-3xl glass-card border border-white/10 shadow-xl flex items-center justify-between group">
+            <div>
+                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Active Tickets</span>
+                <p class="text-3xl font-serif mt-2 text-white">1</p>
+                <a href="{% url 'complaints:list' %}" class="text-xs text-gold-300 hover:text-gold-200 mt-2 inline-flex items-center space-x-1 tracking-wider uppercase">
+                    <span>Inspect timeline</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+            <div class="w-12 h-12 rounded-2xl glass-pill text-gold-400 flex items-center justify-center">
+                <i data-lucide="ticket" class="w-6 h-6"></i>
+            </div>
+        </div>
+
+        <div class="p-6 rounded-3xl glass-card border border-white/10 shadow-xl flex items-center justify-between group">
+            <div>
+                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Maintenance Status</span>
+                <p class="text-2xl font-serif mt-2 text-emerald-400">All Cleared</p>
+                <a href="{% url 'dues:list' %}" class="text-xs text-slate-400 hover:text-white mt-2 inline-flex items-center space-x-1 tracking-wider uppercase">
+                    <span>View receipts</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+            <div class="w-12 h-12 rounded-2xl glass-pill text-emerald-400 flex items-center justify-center">
+                <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+            </div>
+        </div>
+
+        <div class="p-6 rounded-3xl glass-card border border-white/10 shadow-xl flex items-center justify-between group">
+            <div class="min-w-0 pr-2">
+                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Society Dispatch</span>
+                <p class="text-sm font-medium mt-2 text-white line-clamp-1">Water Supply Maintenance & Tank Disinfection</p>
+                <a href="{% url 'notices:list' %}" class="text-xs text-gold-300 hover:text-gold-200 mt-2 inline-flex items-center space-x-1 tracking-wider uppercase">
+                    <span>Read notices</span>
+                    <span>&rarr;</span>
+                </a>
+            </div>
+            <div class="w-12 h-12 rounded-2xl glass-pill text-amber-400 flex items-center justify-center flex-shrink-0">
+                <i data-lucide="bell" class="w-6 h-6"></i>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

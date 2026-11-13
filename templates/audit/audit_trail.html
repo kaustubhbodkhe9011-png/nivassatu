@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}System Audit Trail - NivasSetu{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="pb-4 border-b border-slate-200 dark:border-slate-800">
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-white">System Audit Log</h1>
+        <p class="text-sm text-slate-500">Immutable trail of ticket status transitions, assignments and financial transactions</p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+                <thead>
+                    <tr class="bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+                        <th class="py-3 px-4">Timestamp</th>
+                        <th class="py-3 px-4">Actor</th>
+                        <th class="py-3 px-4">Action</th>
+                        <th class="py-3 px-4">Target Entity</th>
+                        <th class="py-3 px-4">Summary</th>
+                        <th class="py-3 px-4 text-right">IP Address</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300 font-mono text-xs">
+                    {% for l in logs %}
+                    <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-900/50 transition">
+                        <td class="py-3 px-4 text-slate-400">{{ l.timestamp|date:"d M Y, H:i:s" }}</td>
+                        <td class="py-3 px-4 font-sans font-semibold text-slate-900 dark:text-white">{{ l.actor.username|default:"System" }}</td>
+                        <td class="py-3 px-4 font-sans">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                                {{ l.get_action_display }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-indigo-600 dark:text-indigo-400 font-medium font-sans">{{ l.target_model }} #{{ l.target_object_id }}</td>
+                        <td class="py-3 px-4 font-sans text-slate-600 dark:text-slate-300">{{ l.summary }}</td>
+                        <td class="py-3 px-4 text-right text-slate-400">{{ l.ip_address|default:"-" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="py-10 text-center font-sans text-slate-500">
+                            No audit events logged yet.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

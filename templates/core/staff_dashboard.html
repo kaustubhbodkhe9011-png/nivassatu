@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Technician Console | NivasSetu{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-white/10">
+        <div>
+            <span class="text-[10px] uppercase tracking-[0.25em] text-gold-400 font-semibold">Field Operations</span>
+            <h1 class="text-3xl font-serif text-white tracking-wide mt-1">Technician Queue</h1>
+            <p class="text-xs text-slate-400 font-light">Assigned society tickets requiring on-site inspection and repair updates</p>
+        </div>
+        <div class="inline-flex items-center px-4 py-2 rounded-full glass-pill border border-emerald-500/40 text-emerald-400 text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2.5 animate-pulse"></span>
+            <span>Duty Status: Active On-Site</span>
+        </div>
+    </div>
+
+    <!-- Active Tasks Metric -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="p-6 rounded-3xl glass-card border border-white/10 shadow-xl group">
+            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Assigned To Me</span>
+            <p class="text-3xl font-serif mt-2 text-white">3</p>
+            <span class="text-xs text-gold-400/80 mt-1 block">Awaiting immediate inspection</span>
+        </div>
+        <div class="p-6 rounded-3xl glass-card border border-white/10 shadow-xl group">
+            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">In Progress</span>
+            <p class="text-3xl font-serif mt-2 text-amber-400">1</p>
+            <span class="text-xs text-amber-400/80 mt-1 block">Work ongoing on Wing A</span>
+        </div>
+        <div class="p-6 rounded-3xl glass-card border border-white/10 shadow-xl group">
+            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Resolved This Week</span>
+            <p class="text-3xl font-serif mt-2 text-emerald-400">5</p>
+            <span class="text-xs text-emerald-400/80 mt-1 block">Customer verified 100%</span>
+        </div>
+    </div>
+
+    <!-- Quick Link -->
+    <div class="pt-4">
+        <a href="{% url 'complaints:list' %}" class="inline-flex items-center space-x-2 px-6 py-3 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-stone-950 font-semibold text-xs uppercase tracking-wider shadow-lg transition">
+            <i data-lucide="wrench" class="w-4 h-4"></i>
+            <span>Open Assigned Work Orders</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

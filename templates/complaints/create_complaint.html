@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Raise Grievance - NivasSetu{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto space-y-6">
+    <div class="pb-4 border-b border-slate-200 dark:border-slate-800">
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Lodge a New Grievance</h1>
+        <p class="text-sm text-slate-500">
+            {% if active_flat %}
+            Filing for Flat: <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ active_flat.full_name }}</span>
+            {% else %}
+            Society Grievance Filing
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-950 p-6 md:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <form method="POST" enctype="multipart/form-data" class="space-y-5">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Issue Category *</label>
+                {{ form.category }}
+                {% if form.category.errors %}
+                <p class="text-xs text-rose-500 mt-1">{{ form.category.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Priority / Urgency *</label>
+                {{ form.priority }}
+                <p class="text-xs text-slate-500 mt-1">SLA deadline adjusts dynamically (Urgent 12h, High 24h, Medium 48h, Low 72h).</p>
+                {% if form.priority.errors %}
+                <p class="text-xs text-rose-500 mt-1">{{ form.priority.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Brief Title *</label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                <p class="text-xs text-rose-500 mt-1">{{ form.title.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Detailed Description *</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                <p class="text-xs text-rose-500 mt-1">{{ form.description.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Upload Photo (Optional)</label>
+                {{ form.photo }}
+                <p class="text-xs text-slate-500 mt-1">Attach a photo of the leakage, damaged part or electrical board.</p>
+                {% if form.photo.errors %}
+                <p class="text-xs text-rose-500 mt-1">{{ form.photo.errors.0 }}</p>
+                {% endif %}
+            </div>
+
+            <div class="pt-4 flex justify-between items-center border-t border-slate-100 dark:border-slate-800">
+                <a href="{% url 'complaints:list' %}" class="text-sm text-slate-500 hover:text-slate-700">Cancel</a>
+                <button type="submit" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition">
+                    Submit Ticket
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

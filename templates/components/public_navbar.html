@@ -1,0 +1,37 @@
+<!-- Architectural Floating Luxury Public Navbar -->
+<div class="w-full pt-4 sm:pt-6 px-4 sm:px-8 max-w-7xl mx-auto z-50">
+    <header class="h-16 px-6 sm:px-8 rounded-full glass-card border border-white/10 flex items-center justify-between shadow-2xl">
+        <!-- Brand Monogram -->
+        <a href="{% url 'core:landing' %}" class="flex items-center space-x-3 group">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-stone-950 font-serif font-bold text-lg shadow-lg group-hover:scale-105 transition-transform duration-300">
+                △
+            </div>
+            <div class="flex flex-col">
+                <span class="font-serif tracking-widest text-base sm:text-lg font-medium text-white group-hover:text-gold-300 transition-colors">
+                    NIVASSETU
+                </span>
+                <span class="text-[9px] uppercase tracking-[0.25em] text-gold-400/80 -mt-0.5">RESIDENCES</span>
+            </div>
+        </a>
+
+        <!-- Minimal Centered Nav Items (Desktop) -->
+        <nav class="hidden md:flex items-center space-x-8 text-xs uppercase tracking-[0.2em] text-slate-300 font-medium">
+            <a href="#overview" class="hover:text-gold-300 transition-colors">Residences</a>
+            <a href="#services" class="hover:text-gold-300 transition-colors">Governance</a>
+            <a href="#sla" class="hover:text-gold-300 transition-colors">SLA Standards</a>
+            <a href="#dues" class="hover:text-gold-300 transition-colors">Finances</a>
+        </nav>
+
+        <!-- Right Action Button & Theme -->
+        <div class="flex items-center space-x-3">
+            <button onclick="toggleDarkMode()" type="button" aria-label="Toggle Theme" class="p-2 rounded-full text-slate-400 hover:text-gold-300 glass-pill hover:border-gold-400/40 transition">
+                <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+            </button>
+            <a href="{% url 'accounts:login' %}" class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full glass-pill border border-white/20 hover:border-gold-400 text-xs uppercase tracking-widest font-medium text-white hover:text-gold-300 hover:bg-gold-500/10 transition-all duration-300 group shadow-lg">
+                <span>Access Portal</span>
+                <span class="text-gold-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">↗</span>
+            </a>
+        </div>
+    </header>
+</div>

@@ -1,0 +1,34 @@
+<!-- Authenticated Architectural App Header -->
+<header class="h-20 bg-[#0b0c10]/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 md:px-8 z-30">
+    <div class="flex items-center space-x-4">
+        <!-- Society Name Pill -->
+        <div class="flex items-center space-x-3 text-xs tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-gold-400 animate-pulse"></span>
+            <span class="font-serif text-sm tracking-wide text-white uppercase">{{ SOCIETY_NAME }}</span>
+            {% if current_flat %}
+            <span class="hidden sm:inline text-white/20">|</span>
+            <span class="hidden sm:inline text-[10px] uppercase tracking-widest px-3 py-1 rounded-full glass-pill border border-gold-400/30 text-gold-300 font-medium">
+                Wing {{ current_flat.building.name }} &bull; Flat {{ current_flat.flat_number }} ({{ current_occupancy }})
+            </span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="flex items-center space-x-4">
+        <!-- Dark Mode Toggle Button -->
+        <button onclick="toggleDarkMode()" type="button" aria-label="Toggle Theme" class="p-2 rounded-xl text-slate-400 hover:text-gold-300 glass-pill hover:border-gold-400/40 transition">
+            <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+            <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+        </button>
+
+        <!-- Role Badge -->
+        <span class="text-[10px] uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-gold-400/40 bg-gold-500/10 text-gold-300 font-semibold shadow-sm">
+            {{ request.user.get_role_display }}
+        </span>
+
+        <!-- Quick Profile Link (Mobile) -->
+        <a href="{% url 'accounts:profile' %}" class="md:hidden w-8 h-8 rounded-full bg-gold-500/20 border border-gold-400/40 text-gold-300 flex items-center justify-center font-serif font-bold text-xs">
+            {{ request.user.first_name|first|default:request.user.username|first|upper }}
+        </a>
+    </div>
+</header>

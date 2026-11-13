@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}NivasSetu{% endblock %} | Housing Society Portal</title>
+    
+    <!-- Google Fonts: Playfair Display (Luxury Serif) & Plus Jakarta Sans (Modern Clean Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: {
+                            800: '#1a1c23',
+                            900: '#111318',
+                            950: '#0b0c10',
+                        },
+                        gold: {
+                            50: '#fbf8f1',
+                            100: '#f5efde',
+                            200: '#ebdcb8',
+                            300: '#dec28c',
+                            400: '#d0a762',
+                            500: '#c59143',
+                            600: '#ab7535',
+                            700: '#89562c',
+                            800: '#71462a',
+                            900: '#5f3b26',
+                            950: '#361e13',
+                        },
+                        sand: {
+                            100: '#f4ede4',
+                            200: '#e5d8c8',
+                            300: '#d4c0ab',
+                            400: '#bfa48c',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Dark Mode & Theme Initialization -->
+    <script>
+        if (localStorage.theme === 'light') {
+            document.documentElement.classList.remove('dark');
+        } else {
+            // Default to dark luxury theme like Archevo
+            document.documentElement.classList.add('dark');
+        }
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+        
+        /* Smooth subtle ambient glow & luxury glassmorphism */
+        .glass-card {
+            background: rgba(17, 19, 24, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .gold-border {
+            border-color: rgba(208, 167, 98, 0.3);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="h-full bg-[#0b0c10] text-slate-100 dark:bg-[#0b0c10] dark:text-slate-100 flex flex-col transition-colors duration-200 antialiased selection:bg-gold-500/30 selection:text-gold-200"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    {% if request.user.is_authenticated %}
+    <!-- Logged in App Shell -->
+    <div class="flex h-screen overflow-hidden bg-[#0b0c10]">
+        <!-- Desktop Sidebar -->
+        {% include "components/sidebar.html" %}
+
+        <!-- Content Area -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-y-auto pb-16 md:pb-0">
+            {% include "components/navbar.html" %}
+            
+            <!-- Django Messages / Flash Alerts -->
+            <main class="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+                {% if messages %}
+                <div class="mb-6 space-y-2">
+                    {% for message in messages %}
+                    <div class="p-4 rounded-xl flex items-center justify-between text-sm shadow-lg glass-card transition-all
+                        {% if message.tags == 'error' %} border-l-4 border-rose-500 text-rose-300
+                        {% elif message.tags == 'success' %} border-l-4 border-emerald-500 text-emerald-300
+                        {% elif message.tags == 'warning' %} border-l-4 border-amber-500 text-amber-300
+                        {% else %} border-l-4 border-gold-500 text-gold-200
+                        {% endif %}">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="info" class="w-5 h-5 flex-shrink-0 text-gold-400"></i>
+                            <span class="tracking-wide">{{ message }}</span>
+                        </div>
+                        <button onclick="this.parentElement.remove()" class="text-slate-400 hover:text-white transition">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+
+        <!-- Mobile Bottom Navigation Bar -->
+        {% include "components/mobile_nav.html" %}
+    </div>
+
+    {% else %}
+    <!-- Public / Anonymous Shell -->
+    <div class="min-h-full flex flex-col justify-between bg-[#0b0c10] text-slate-100">
+        {% include "components/public_navbar.html" %}
+        
+        <main class="flex-1">
+            {% if messages %}
+            <div class="max-w-4xl mx-auto px-4 pt-4">
+                {% for message in messages %}
+                <div class="p-4 rounded-xl text-sm glass-card border border-gold-500/30 text-gold-200">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            {% block public_content %}{% endblock %}
+        </main>
+        
+        <footer class="py-8 border-t border-white/5 bg-[#0b0c10]/90 text-center text-xs tracking-wider uppercase text-slate-400">
+            <span class="text-gold-400/80 font-serif lowercase tracking-widest text-sm mr-2">नि</span>
+            NivasSetu &bull; Architectural Society Management &bull; CS-231-FP
+        </footer>
+    </div>
+    {% endif %}
+
+    <!-- Lucide icons render trigger -->
+    <script>
+        lucide.createIcons();
+        document.body.addEventListener('htmx:afterSwap', function() {
+            lucide.createIcons();
+        });
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
